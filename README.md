@@ -5,3 +5,4 @@ CSPLuaCompatibilityManager is a lua module for Assetto Corsa CSP apps used for i
 </p>
 
 <img width="2560" height="1440" alt="Screenshot 1_27_2026 3_07_44 PM" src="https://github.com/user-attachments/assets/14c4cbd9-a1b8-419f-89a1-7cfa123010da" />
+
