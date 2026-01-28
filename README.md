@@ -57,7 +57,7 @@ CSPCompatibilityManager.addSimStateFunction(function(sim) return sim.raceSession
 local APP_NAME = 'My App'
 local APP_VERSION = 'v0.95'
 local everythingOK = CSPCompatibilityManager.checkAndAlert(APP_NAME, APP_VERSION)
-CSPCompatibilityManager.clearMemory() -- call to get rid of the memory used by the metadata we added previously
+CSPCompatibilityManager.freeMemory() -- call to get rid of the memory used by the metadata we added previously
 
 -- if any of the functions are missing, we can output an error here and possibly even halt the app from running any further.
 if not everythingOK then
