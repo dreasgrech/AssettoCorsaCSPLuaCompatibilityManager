@@ -17,6 +17,9 @@ local simStateFnAvailable, ac_sim = pcall(function() return simStateFn() end)
 ---@type table<TableForUsedElement>
 local usedElements = {}
 
+-- Holds the last error message generated
+local lastErrorMessageGenerated = ''
+
 --- Creates a table for metadata of a used CSP element
 ---@param elementFn function
 ---@param elementName string
@@ -176,6 +179,8 @@ CSPCompatibilityManager.checkAndAlert = function(appName, appVersion)
         missingCSPElementsErrorMessage = string.format("%s\n\nTo fix the issue, please make sure you're on the latest version of Custom Shaders Patch (%s)", missingCSPElementsErrorMessage, CSPCompatibilityManager.CSPDownloadURL)
         missingCSPElementsErrorMessage = missingCSPElementsErrorMessage .. string.format("\n\nYour CSP version is %s", cspVersion)
 
+        lastErrorMessageGenerated = missingCSPElementsErrorMessage
+
         -- Log the error to the CSP log as well
         ac.error(missingCSPElementsErrorMessage)
 
@@ -186,6 +191,12 @@ CSPCompatibilityManager.checkAndAlert = function(appName, appVersion)
     end
 
     return not anyMissingCSPElements
+end
+
+---Returns the last error message generated from CSPCompatibilityManager.checkAndAlert()
+---@return string
+CSPCompatibilityManager.getLastGeneratedErrorMessage = function()
+    return lastErrorMessageGenerated
 end
 
 CSPCompatibilityManager.freeMemory = function()
