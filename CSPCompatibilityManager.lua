@@ -131,6 +131,9 @@ CSPCompatibilityManager.ErrorModalDialogShowCopyErrorToClipboardButton = true
 ---If set to true, the error modal dialog will automatically close when the Escape key is pressed or when clicking outside the dialog
 CSPCompatibilityManager.ErrorModalDialogAutoClose = true
 
+---The URL that's shown in the error modal dialog when suggesting to download the latest version of Custom Shaders Patch
+CSPCompatibilityManager.CSPDownloadURL = "https://www.patreon.com/c/x4fab/posts"
+
 ---A function that is called when the error modal dialog is closed
 ---@type function|nil
 CSPCompatibilityManager.OnErrorModalDialogClosed = nil
@@ -170,7 +173,7 @@ CSPCompatibilityManager.checkAndAlert = function(appName, appVersion)
             missingCSPElementsErrorMessage = missingCSPElementsErrorMessage .. " - " .. elementName .. "\n"
         end
         missingCSPElementsErrorMessage = missingCSPElementsErrorMessage .. "\nSee the CSP log in \"\\Documents\\Assetto Corsa\\logs\\custom_shaders_patch.log\" (on Windows) for more details."
-        missingCSPElementsErrorMessage = missingCSPElementsErrorMessage .. "\n\nTo fix the issue, please make sure you're on the latest version of Custom Shaders Patch (https://www.patreon.com/c/x4fab/posts)"
+        missingCSPElementsErrorMessage = string.format("%s\n\nTo fix the issue, please make sure you're on the latest version of Custom Shaders Patch (%s)", missingCSPElementsErrorMessage, CSPCompatibilityManager.CSPDownloadURL)
         missingCSPElementsErrorMessage = missingCSPElementsErrorMessage .. string.format("\n\nYour CSP version is %s", cspVersion)
 
         -- Log the error to the CSP log as well
