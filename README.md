@@ -1,4 +1,4 @@
-CSPLuaCompatibilityManager is a lua module for Assetto Corsa CSP apps used for informing a user with a modal dialog if he's running an older version of CSP which doesn't include the function your app needs.
+`CSPLuaCompatibilityManager` is a lua module for Assetto Corsa CSP apps used for informing a user with a modal dialog if he's running an older version of CSP which doesn't include the function your app needs.
 
 <p align="center">
     <img width="809" height="305" alt="image" src="https://github.com/user-attachments/assets/9dced4ed-c31b-476b-865f-20e4329e20f5" />
