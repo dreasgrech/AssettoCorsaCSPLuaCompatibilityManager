@@ -1,6 +1,7 @@
 --- Responsible for checking if required CSP elements (functions, fields, enums, etc...) are available in the current CSP version.
 --- When making use of a CSP element that was added in a specific CSP version, it is recommended to add it to the list of used elements here
 --- so that we can check for its existence at runtime
+--- v1.0
 --- Author: https://github.com/dreasgrech
 local CSPCompatibilityManager = {}
 
