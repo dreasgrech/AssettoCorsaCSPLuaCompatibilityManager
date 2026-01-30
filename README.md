@@ -44,7 +44,7 @@ CSPCompatibilityManager.addSimStateFunction(function(sim) return sim.raceSession
 
 **Both these functions provide a safe way of accessing the CSP functions without actually throwing any errors which cause your lua app to break.**
 
-### Call `checkForMissingElements()` to check if all the needed CSP functions are available.
+### Call `checkForMissingElements()` to check if all the needed CSP functions are available
 The `CSPCompatibilityManager.checkForMissingElements` function requires the name and version of your app (these are used for the error message shown to the user) and returns a `boolean` indicating whether all the functions exist in the player's current CSP version.
 ```lua
 local everythingOK = CSPCompatibilityManager.checkForMissingElements("My incredible app", "v0.9.5")
@@ -56,10 +56,50 @@ Call `CSPCompatibilityManager.freeMemory()` to get rid of the memory used by the
 CSPCompatibilityManager.freeMemory()
 ```
 
+### Options
+There are a number of optional settings you can tweak to make it work more for your:
+> [!WARNING]
+> Make sure you specify these options before calling `CSPCompatibilityManager.checkForMissingElements` since they are used during that function.
+
+```lua
+---If set to true, missing CSP elements will be logged to the CSP log as they are detected while checking
+CSPCompatibilityManager.LogMissingElementsWhileChecking = false
+
+---If set to true, some non-existant functions will be added to the list of functions to be checked for existence in CSP (for testing purposes)
+CSPCompatibilityManager.AddNonExistantFunctionsToTestMissing = false
+
+---If set to true, an error modal dialog will be shown when missing CSP elements are detected
+CSPCompatibilityManager.ShowErrorModalDialog = true
+
+---The color used for the error modal dialog text
+CSPCompatibilityManager.ErrorModalDialogTextColor = rgbm(1, 0, 0, 1)
+
+---If set to true, the error modal dialog will include a "Copy" button
+CSPCompatibilityManager.ErrorModalDialogShowCopyErrorToClipboardButton = true
+
+---If set to true, the error modal dialog will automatically close when the Escape key is pressed or when clicking outside the dialog
+CSPCompatibilityManager.ErrorModalDialogAutoClose = true
+
+---The URL that's shown in the error modal dialog when suggesting to download the latest version of Custom Shaders Patch
+CSPCompatibilityManager.CSPDownloadURL = "https://www.patreon.com/c/x4fab/posts"
+
+---A function that is called when the error modal dialog is closed
+---@type function|nil
+CSPCompatibilityManager.OnErrorModalDialogClosed = nil
+```
+
+
 ## Full Sample
 ```lua
 -- import the CSPCompatibilityManager module ideally in the first line of your app
 local CSPCompatibilityManager = require("AssettoCorsaCSPLuaCompatibilityManager.CSPCompatibilityManager")
+
+-- optional settings
+CSPCompatibilityManager.ErrorModalDialogTextColor = rgbm(0.161, 0.204, 0.132, 0.75)
+CSPCompatibilityManager.OnErrorModalDialogClosed = function()
+    -- User closed the error modal dialog
+    ac.log("User closed the missing CSP elements error modal dialog.")
+end
 
 -- add all the csp functions that your app uses which you want to check for existence in the CSP version running on the user's app
 CSPCompatibilityManager.addFunction(function() return ac.log end, "ac.log")
