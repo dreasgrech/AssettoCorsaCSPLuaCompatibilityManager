@@ -56,7 +56,7 @@ Call `CSPCompatibilityManager.freeMemory()` to get rid of the memory used by the
 CSPCompatibilityManager.freeMemory()
 ```
 
-## Sample usage
+## Full Sample
 ```lua
 -- import the CSPCompatibilityManager module ideally in the first line of your app
 local CSPCompatibilityManager = require("AssettoCorsaCSPLuaCompatibilityManager.CSPCompatibilityManager")
