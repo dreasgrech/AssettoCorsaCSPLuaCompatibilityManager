@@ -57,7 +57,7 @@ CSPCompatibilityManager.freeMemory()
 ```
 
 ### Options
-There are a number of optional settings you can tweak to make it work more for your:
+There are a number of optional settings you can tweak to make it work more for you:
 > [!WARNING]
 > Make sure you specify these options before calling `CSPCompatibilityManager.checkForMissingElements` since they are used during that function.
 
