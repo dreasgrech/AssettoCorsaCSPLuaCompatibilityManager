@@ -150,7 +150,7 @@ CSPCompatibilityManager.addFunction = function(fn, name)
 end
 
 ---Add a function that takes ac.getSim() as a parameter to be checked for existence in Custom Shaders Patch (CSP)
----@param fn fun(sim: ac.StateSim): any @The function that takes ac.getSim() as a parameter and retrieves the CSP element to be checked
+---@param fn fun(sim: ac.StateSim): any @The callback that takes ac.getSim() as a parameter and retrieves the CSP element to be checked
 ---@param name string @The name of the CSP element (for logging purposes)
 CSPCompatibilityManager.addSimStateFunction = function(fn, name)
     CSPCompatibilityManager.addFunction(function()
@@ -158,7 +158,11 @@ CSPCompatibilityManager.addSimStateFunction = function(fn, name)
     end, name)
 end
 
-CSPCompatibilityManager.checkAndAlert = function(appName, appVersion)
+---Checks for missing CSP elements and returns whether any are missing
+---@param appName string @The name of the app being checked (for logging purposes)
+---@param appVersion string @The version of the app being checked (for logging purposes)
+---@return boolean @Returns true if all required CSP elements are available, false if any are missing
+CSPCompatibilityManager.checkForMissingElements = function(appName, appVersion)
     local cspVersion = getCSPVersion()
     ac.log(string.format("[CSPCompatibilityManager] Checking %s v%s.  Custom Shaders Patch: %s", appName, appVersion, cspVersion))
 
@@ -193,14 +197,15 @@ CSPCompatibilityManager.checkAndAlert = function(appName, appVersion)
     return not anyMissingCSPElements
 end
 
----Returns the last error message generated from CSPCompatibilityManager.checkAndAlert()
+---Returns the last error message generated from CSPCompatibilityManager.checkForMissingElements()
 ---@return string
 CSPCompatibilityManager.getLastGeneratedErrorMessage = function()
     return lastErrorMessageGenerated
 end
 
+---Removes all references held by the CSPCompatibilityManager added from the addFunction functions and its variants.
 CSPCompatibilityManager.freeMemory = function()
-    table.clear(usedElements)
+    if table.clear then table.clear(usedElements) end
 
     --[==[
     ---@diagnostic disable-next-line: assign-type-mismatch -- to avoid warning about assigning nil to the table
