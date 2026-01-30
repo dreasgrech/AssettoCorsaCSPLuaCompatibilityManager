@@ -101,7 +101,8 @@ CSPCompatibilityManager.OnErrorModalDialogClosed = function()
     ac.log("User closed the missing CSP elements error modal dialog.")
 end
 
--- add all the csp functions that your app uses which you want to check for existence in the CSP version running on the user's app
+-- add all the csp functions that your app uses which you want to check for existence in the CSP version running on the user's app.
+-- (alternatively, tuck them away to a separate lua file and `require` it here instead of cluttering your app's main file with these lines)
 CSPCompatibilityManager.addFunction(function() return ac.log end, "ac.log")
 CSPCompatibilityManager.addFunction(function() return ac.warn end, "ac.warn")
 CSPCompatibilityManager.addFunction(function() return ac.error end, "ac.error")
@@ -155,6 +156,9 @@ if not everythingOK then
     ac.error(string.format("%s v%s is missing required Custom Shaders Patch elements and will not run as expected.", APP_NAME, APP_VERSION))
     return false -- if we don't want the app to continue running.
 end
+
+-- Your app's code then starts from here onwards...
+
 ```
 
 <p align="center">
