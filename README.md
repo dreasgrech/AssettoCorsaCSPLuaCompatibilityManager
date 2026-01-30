@@ -12,7 +12,7 @@ The point of this is so that if a user of your app is running a version of CSP w
 
 ## How to use
 ### Download and Extract
-Download and extract the `AssettoCorsaCSPLuaCompatibilityManager` directory to the directory of your Assetto Corsa CSP lua app.
+Download the zip from https://github.com/dreasgrech/AssettoCorsaCSPLuaCompatibilityManager/releases and extract the `AssettoCorsaCSPLuaCompatibilityManager` directory to the directory of your Assetto Corsa CSP lua app.
 
 ### Including the CSPCompatibilityManager to your code
 Add the `CSPCompatibilityManager` module to your app ideally in the very first line:
