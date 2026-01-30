@@ -6,6 +6,19 @@
 
 <img width="2560" height="1440" alt="Screenshot 1_27_2026 3_07_44 PM" src="https://github.com/user-attachments/assets/14c4cbd9-a1b8-419f-89a1-7cfa123010da" />
 
+## How to use
+Download and extract the `AssettoCorsaCSPLuaCompatibilityManager` directory to the directory of your Assetto Corsa CSP lua app.
+
+Add the `CSPCompatibilityManager` module to your app ideally in the very first line:
+```lua
+local CSPCompatibilityManager = require("AssettoCorsaCSPLuaCompatibilityManager.CSPCompatibilityManager")
+```
+If you put the `AssettoCorsaCSPLuaCompatibilityManager` directory in a subdorectory, such as `lib`, you will need to include it like this:
+```lua
+local CSPCompatibilityManager = require("lib.AssettoCorsaCSPLuaCompatibilityManager.CSPCompatibilityManager")
+```
+
+## Sample usage
 ```lua
 -- import the CSPCompatibilityManager module ideally in the first line of your app
 local CSPCompatibilityManager = require("AssettoCorsaCSPLuaCompatibilityManager.CSPCompatibilityManager")
