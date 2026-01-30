@@ -95,7 +95,7 @@ CSPCompatibilityManager.OnErrorModalDialogClosed = nil
 local CSPCompatibilityManager = require("AssettoCorsaCSPLuaCompatibilityManager.CSPCompatibilityManager")
 
 -- optional settings
-CSPCompatibilityManager.ErrorModalDialogTextColor = rgbm(0.161, 0.204, 0.132, 0.75)
+CSPCompatibilityManager.ErrorModalDialogTextColor = rgbm(0.961, 0.914, 0.132, 0.75)
 CSPCompatibilityManager.OnErrorModalDialogClosed = function()
     -- User closed the error modal dialog
     ac.log("User closed the missing CSP elements error modal dialog.")
@@ -156,3 +156,7 @@ if not everythingOK then
     return false -- if we don't want the app to continue running.
 end
 ```
+
+<p align="center">
+    <img width="811" height="296" alt="image" src="https://github.com/user-attachments/assets/3d5b69da-a33d-4eaa-89b4-785554140815" />
+</p>
