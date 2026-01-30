@@ -7,15 +7,49 @@
 <img width="2560" height="1440" alt="Screenshot 1_27_2026 3_07_44 PM" src="https://github.com/user-attachments/assets/14c4cbd9-a1b8-419f-89a1-7cfa123010da" />
 
 ## How to use
+### Download and Extract
 Download and extract the `AssettoCorsaCSPLuaCompatibilityManager` directory to the directory of your Assetto Corsa CSP lua app.
 
+### Including the CSPCompatibilityManager to your code
 Add the `CSPCompatibilityManager` module to your app ideally in the very first line:
 ```lua
 local CSPCompatibilityManager = require("AssettoCorsaCSPLuaCompatibilityManager.CSPCompatibilityManager")
 ```
-If you put the `AssettoCorsaCSPLuaCompatibilityManager` directory in a subdorectory, such as `lib`, you will need to include it like this:
+If you put the `AssettoCorsaCSPLuaCompatibilityManager` directory in a subdirectory, such as `lib`, you will need to include it like this:
 ```lua
 local CSPCompatibilityManager = require("lib.AssettoCorsaCSPLuaCompatibilityManager.CSPCompatibilityManager")
+```
+### Adding your CSP functions
+Next we need to add a reference to all the CSP functions that you are using in your app which have the potential of not working on outdated CSP versions (or ideally just add all the CSP functions you are using here to really make sure your app doesn't break).
+Currently there are two functions you can use: `CSPCompatibilityManager.addFunction` and `CSPCompatibilityManager.addSimStateFunction`.
+
+These functions accept two formal arguments.  The first is a function which returns a reference to the CSP function you want testing, and the second is a string representing the name of the function which is shown in the error message if it doesn't exist.
+
+#### `CSPCompatibilityManager.addFunction`: Used for adding a reference to any type of CSP function:
+```lua
+CSPCompatibilityManager.addFunction(function() return ac.setWindowOpen end, "ac.setWindowOpen")
+CSPCompatibilityManager.addFunction(function() return ui.pushItemWidth end, "ui.pushItemWidth")
+CSPCompatibilityManager.addFunction(function() return physics.preventAIFromRetiring end, "physics.preventAIFromRetiring")
+```
+
+#### `CSPCompatibilityManager.addSimStateFunction`: Used for adding a reference to a CSP function from the `ac.StateSim` table from `ac.getSim()`:
+```lua
+CSPCompatibilityManager.addSimStateFunction(function(sim) return sim.trackLengthM end, "ac.getSim().trackLengthM")
+CSPCompatibilityManager.addSimStateFunction(function(sim) return sim.raceSessionType end, "ac.getSim().raceSessionType")
+```
+
+**Both these functions provide a safe way of accessing the CSP functions without actually throwing any errors which cause your lua app to break.**
+
+### Call `checkForMissingElements()` to check if all the needed CSP functions are available.
+The `CSPCompatibilityManager.checkForMissingElements` function requires the name and version of your app (these are used for the error message shown to the user) and returns a `boolean` indicating whether all the functions exist in the player's current CSP version.
+```lua
+local everythingOK = CSPCompatibilityManager.checkForMissingElements("My incredible app", "v0.9.5")
+```
+
+### Clear the references to the functions added before
+Call `CSPCompatibilityManager.freeMemory()` to get rid of the memory used by the metadata we added previously.
+```lua
+CSPCompatibilityManager.freeMemory()
 ```
 
 ## Sample usage
@@ -64,12 +98,12 @@ CSPCompatibilityManager.addFunction(function() return ui.StyleColor end, "ui.Sty
 
 -- add the functions that we want to check from ac.getSim()
 CSPCompatibilityManager.addSimStateFunction(function(sim) return sim.trackLengthM end, "ac.getSim().trackLengthM")
-CSPCompatibilityManager.addSimStateFunction(function(sim) return sim.raceSessionType end, "ac.getSim().trackLengthM")
+CSPCompatibilityManager.addSimStateFunction(function(sim) return sim.raceSessionType end, "ac.getSim().raceSessionType")
 
 -- make sure all the functions exist and show the modal dialog if any are missing
 local APP_NAME = 'My App'
 local APP_VERSION = 'v0.95'
-local everythingOK = CSPCompatibilityManager.checkAndAlert(APP_NAME, APP_VERSION)
+local everythingOK = CSPCompatibilityManager.checkForMissingElements(APP_NAME, APP_VERSION)
 CSPCompatibilityManager.freeMemory() -- call to get rid of the memory used by the metadata we added previously
 
 -- if any of the functions are missing, we can output an error here and possibly even halt the app from running any further.
